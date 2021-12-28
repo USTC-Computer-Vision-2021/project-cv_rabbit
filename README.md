@@ -12,7 +12,7 @@
 2. 蒲明昱 PB18111733
     - 方案调研
     - 算法设计
-    - 文档撰写
+    - 代码实现
 
 ## 问题描述
 1. 初衷和动机：[A look into the past](https://blog.flickr.net/en/2010/01/27/a-look-into-the-past)是一种图片艺术，让照片有了“昨日重现”的效果，很适合发朋友圈。所以，我们利用Computer Vision课堂上学到的知识，在一些我们感兴趣的照片上实现“A look into the past”。
