@@ -1,4 +1,4 @@
-# 基于SIFT实现图像拼接（A look into the past）
+# 基于SIFT实现图像拼接（A look into the past+Panorama）
 核心技术要点：
 1. 关键点检测（Keypoints Detection）
 2. 匹配（Match）
