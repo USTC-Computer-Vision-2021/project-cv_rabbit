@@ -18,6 +18,7 @@
 1. 初衷和动机：[A look into the past](https://blog.flickr.net/en/2010/01/27/a-look-into-the-past)是一种图片艺术，让照片有了“昨日重现”的效果，很适合发朋友圈。所以，我们利用Computer Vision课堂上学到的知识，在一些我们感兴趣的照片上实现“A look into the past”。
 2. 创意描述：打开手机相册，找一些有意思的照片，对某个部位进行截取。当然，如果会用PS的话，可以对该部分做更精细化的截取甚至做一些特效，可以得到更好的效果。因为懒，我们就直接截取了图片某个部分，将其转化为灰度图像，之后通过计算机视觉算法对两张图进行处理，最终得到“A look into the past”的效果。
 3. 计算机视觉问题：上述创意的实现，可以转化为计算机视觉中的图像拼接问题，关键技术是关键点检测、匹配以及图像的缝合。
+3. 问题延申：为了充分展示我们所实现的图像拼接算法的稳定性和通用性，**我们设计一个新应用：将一短视频通过抽帧拼接为一副全景图。**最终运行结果表明，我们实现的图形拼接算法效果非常好。
 
 ## 原理与实现
 
@@ -358,6 +359,69 @@ imshow('stack.jpg', stack)
 </table>
 
 
+## 应用拓展（全景图拼接）
+
+前面介绍并展示了如何将两个图像拼接成一个大图像。在本节中，我们将视频拼接成真实的全景图。首先，我们读取`image/Vcore.mov`的所有帧。我在`utils.py`中提供了一个实用函数`read_video_frames`，用于从视频中加载所有帧。
+
+```python
+from utils import read_video_frames
+
+video_name = 'image/Vcore.mov'
+images = read_video_frames(video_name)
+```
+
+<table>
+    <tr>
+        <td ><center><img src="./result/Vcore.gif" ></center></td>
+    </tr>
+    <tr>
+    <td><center>Figure 9: Vcore.mov</center></td>
+    </tr>
+</table>
+
+全景图通常比视频帧大几倍。在这个视频中，我们设`(H, W) = (h*4, w*3)`。
+
+```python
+h, w = images[0].shape[:2]
+H, W = h*4, w*3
+panorama = np.zeros([H,W,3]) # use a large canvas
+```
+
+然后我们用第一帧初始化全景图。在这个视频中，因为V Core是从它的右下角扫描的，所以我们把第一帧放在全景图的右下角。
+
+```python
+# init panorama
+h_start = H-h-h//2
+w_start = W-w
+panorama[h_start:h_start+h, w_start:w_start+w, :] = images[0]
+```
+
+然后，我们将所有帧一个接一个地对齐到初始的全景图上。类似地，我们需要维护一个cnt变量来记录每个像素的计数，并维护一个sum变量来记录求和。为了减少计算，我们每四帧或六帧缝合一次。
+
+```python
+trans_sum = np.zeros([H,W,3])
+cnt = np.ones([H,W,1])*1e-10
+for img in tqdm(images[::4], 'processing'):
+    # TODO: write your own code here as last section
+    #       to align img with current panorama
+    aligned_img = ...
+
+    # combine
+    trans_sum += aligned_img
+    cnt += (trans != 0).any(2, keepdims=True)
+    panorama = trans_sum/cnt
+
+    # show
+    imshow('panorama.jpg', panorama)
+```
+
+<table>
+    <tr>
+        <td ><center><img src="./result/panorama_init.jpg" >Figure 10: init panorama</center></td>
+        <td ><center><img src="./result/panorama_half.jpg" >Figure 11: half panorama</center></td>
+        <td ><center><img src="./result/panorama.jpg" >Figure 12: panorama</center></td>
+    </tr>
+</table>
 
 ## 工程结构
 
@@ -369,6 +433,7 @@ imshow('stack.jpg', stack)
 ├── result
 ├── src
 │   ├── main.py
+│   ├── panorama.py
 │   ├── sift.py
 │   └── utils.py
 └── test.py
@@ -382,12 +447,19 @@ imshow('stack.jpg', stack)
 numpy==1.21.5
 opencv-python==4.5.4.60
 tqdm==4.62.3
+imageio==2.13.5
 ```
 
 按照如下命令运行：
 
 ```shell
+#库安装
 pip install -r requirements.txt
-cd src/ && python main.py
+#打开工作目录
+cd src/
+#Look into the past
+python main.py
+#全景图拼接
+python panorama.py
 ```
 
