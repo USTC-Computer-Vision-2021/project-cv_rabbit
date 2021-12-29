@@ -373,6 +373,15 @@ imshow('stack.jpg', stack)
 </table>
 
 
+这张图艺术感可能不是那么强，我们决定再放一张天鹅湖的夕阳照，供大家鉴赏。
+
+<table>
+    <tr>
+        <td height="100px"><center><img src="./image/now_lake.jpg" >Figure 9: Swan lake</center></td>
+        <td height="100px"><center><img src="./image/stack_lake.jpg" >Figure 10: Swan lake-look in to the past</center></td>
+    </tr>
+</table>
+
 ## 应用拓展（全景图拼接）
 
 前面介绍并展示了如何将两个图像拼接成一个大图像。在本节中，我们将视频拼接成真实的全景图。首先，我们读取`image/Vcore.mov`的所有帧。我在`utils.py`中提供了一个实用函数`read_video_frames`，用于从视频中加载所有帧。
@@ -389,9 +398,10 @@ images = read_video_frames(video_name)
         <td ><center><img src="./result/Vcore.gif" ></center></td>
     </tr>
     <tr>
-    <td><center>Figure 9: Vcore.mov</center></td>
+    <td><center>Figure 11: Vcore.mov</center></td>
     </tr>
 </table>
+
 
 全景图通常比视频帧大几倍。在这个视频中，我们设`(H, W) = (h*4, w*3)`。
 
@@ -431,11 +441,12 @@ for img in tqdm(images[::4], 'processing'):
 
 <table>
     <tr>
-        <td ><center><img src="./result/panorama_init.jpg" >Figure 10: init panorama</center></td>
-        <td ><center><img src="./result/panorama_half.jpg" >Figure 11: half panorama</center></td>
-        <td ><center><img src="./result/panorama.jpg" >Figure 12: panorama</center></td>
+        <td ><center><img src="./result/panorama_init.jpg" >Figure 12: init panorama</center></td>
+        <td ><center><img src="./result/panorama_half.jpg" >Figure 13: half panorama</center></td>
+        <td ><center><img src="./result/panorama.jpg" >Figure 14: panorama</center></td>
     </tr>
 </table>
+
 
 ## 工程结构
 
