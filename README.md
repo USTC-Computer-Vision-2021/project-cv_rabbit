@@ -377,8 +377,8 @@ imshow('stack.jpg', stack)
 
 <table>
     <tr>
-        <td height="100px"><center><img src="./image/now_lake.jpg" >Figure 9: Swan lake</center></td>
-        <td height="100px"><center><img src="./image/stack_lake.jpg" >Figure 10: Swan lake-look in to the past</center></td>
+        <td height="100px"><center><img src="./image/now_lake.jpg" >Figure 9: swan lake</center></td>
+        <td height="100px"><center><img src="./image/stack_lake.jpg" >Figure 10: look into the past(swan lake)</center></td>
     </tr>
 </table>
 
