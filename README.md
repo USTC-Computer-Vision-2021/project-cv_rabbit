@@ -282,11 +282,25 @@ T, status = cv2.findHomography(
 
 返回值`status`表示关键点的正确性。`status[i]==1`表示`src_kps[i]`和`dst_kps[i]`是正确的对。
 
-返回值`T`是一个$3\times3$的变换矩阵 $$\begin{equation} T = \begin{bmatrix} h_{11} & h_{12} & h_{13} \ h_{21} & h_{22} & h_{23} \ h_{31} & h_{32} & h_{33} \ \end{bmatrix}, \end{equation}$$_
+返回值`T`是一个$3\times3$的变换矩阵：
+
+$$\begin{equation}
+T = \begin{bmatrix}
+h_{11} & h_{12} & h_{13} \\
+h_{21} & h_{22} & h_{23} \\
+h_{31} & h_{32} & h_{33} \\
+\end{bmatrix},
+\end{equation}$$
 
 将一个点从 $(x,y)$变换到位置$(x', y')$：
 
-_$$\begin{equation} \left{ \begin{matrix} x' =\dfrac{h_{11}x + h_{12}y + h_{13}}{h_{31}x + h_{32}y + h_{33}}\ y' =\dfrac{h_{21}x + h_{22}y + h_{23}}{h_{31}x + h_{32}y + h_{33}} \end{matrix} \right. \end{equation}$$
+$$\begin{equation}
+\left\{
+\begin{matrix}
+x' =\dfrac{h_{11}x + h_{12}y + h_{13}}{h_{31}x + h_{32}y + h_{33}}\\
+y' =\dfrac{h_{21}x + h_{22}y + h_{23}}{h_{31}x + h_{32}y + h_{33}}
+\end{matrix} \right.
+\end{equation}$$
 
 我们可以通过`cv2.warpPerspective`对图像2应用变换`T`。
 
